@@ -1,0 +1,5 @@
+.idea
+vendor
+bin
+etc
+run-k8s.sh
