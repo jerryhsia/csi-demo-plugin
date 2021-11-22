@@ -27,7 +27,7 @@ func NewNodeServer(nodeid string) *nodeServer {
 func ensureDir(dir string) error {
 	_, err2 := os.Stat(dir)
 	if err2 != nil {
-		klog.V(4).Infof("ensureDir dir:%s not found", dir)
+		// klog.V(4).Infof("ensureDir dir:%s not found", dir)
 		if err := os.MkdirAll(dir, 0750); err != nil {
 			klog.V(4).Infof("ensureDir dir:%s failed: %v", dir, err)
 		}

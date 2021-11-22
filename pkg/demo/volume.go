@@ -1,6 +1,11 @@
 package demo
 
-import "fmt"
+import (
+    "encoding/json"
+    "fmt"
+    "io"
+    "os"
+)
 
 type VolumeInterface interface {
     GetName() string
@@ -12,18 +17,14 @@ const VOLUME_TYPE_BOS = "BOS"
 const VOLUME_TYPE_OSS = "OSS"
 
 type Volume struct {
-    Name string
-    Type string
+    Name string `json:"name"`
+    Cmd string `json:"cmd"`
+    Type string `json:"type"`
+    Options string `json:"options"`
 }
 
 func (v *Volume) GetMountCmd(path string) (string, string) {
-    if v.Type == VOLUME_TYPE_OBS {
-        return "obsfs", fmt.Sprintf("%s %s -o url=obs.cn-southwest-2.myhuaweicloud.com -o passwd_file=/csi-demo-plugin/etc/passwd-obsfs -o big_writes -o max_write=131072 -o nonempty -o use_ino -o obsfslog", v.Name, path)
-    } else if v.Type == VOLUME_TYPE_BOS {
-        return "bosfs", fmt.Sprintf("%s %s -o endpoint=http://bj.bcebos.com -o ak=xxx -o sk=xxx -o logfile=/csi-demo-plugin/bos.log", v.Name, path)
-    } else {
-        return "ossfs", fmt.Sprintf("%s %s -o passwd_file=/csi-demo-plugin/etc/passwd-ossfs -o nonempty -o url=oss-cn-chengdu.aliyuncs.com", v.Name, path)
-    }
+    return v.Cmd, fmt.Sprintf("%s %s %s", v.Name, path, v.Options)
 }
 
 var allVolume []*Volume
@@ -31,19 +32,9 @@ var allVolume []*Volume
 func init()  {
     allVolume = make([]*Volume, 0)
 
-    oss := &Volume{}
-    oss.Type = VOLUME_TYPE_OSS
-    oss.Name = "ossfs-jerry-test"
+    file , err1 := os.Open("etc/volumes.json")
+    content, err2 := io.ReadAll(file)
+    err3 := json.Unmarshal(content, &allVolume)
 
-    bos := &Volume{}
-    bos.Type = VOLUME_TYPE_BOS
-    bos.Name = "bosfs-jerry-test"
-
-    obs := &Volume{}
-    obs.Type = VOLUME_TYPE_OBS
-    obs.Name = "obsfs-jerry-test"
-
-    allVolume = append(allVolume, oss)
-    allVolume = append(allVolume, bos)
-    allVolume = append(allVolume, obs)
+    fmt.Printf("InitVolumes volumes:%s err1:%#v err2:%#v err3:%#v", allVolume, err1, err2, err3)
 }
