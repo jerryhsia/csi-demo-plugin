@@ -4,7 +4,6 @@ metadata:
   name: csi-demo-driver
   namespace: csi-dev
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: csi-demo-driver
