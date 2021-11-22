@@ -20,7 +20,7 @@ func (v *Volume) GetMountCmd(path string) (string, string) {
     if v.Type == VOLUME_TYPE_OBS {
         return "obsfs", fmt.Sprintf("%s %s -o url=obs.cn-southwest-2.myhuaweicloud.com -o passwd_file=/csi-demo-plugin/etc/passwd-obsfs -o big_writes -o max_write=131072 -o nonempty -o use_ino -o obsfslog", v.Name, path)
     } else if v.Type == VOLUME_TYPE_BOS {
-        return "bosfs", fmt.Sprintf("%s %s -o endpoint=http://bj.bcebos.com -o ak=5801973fca8e41a941aca737f3b1f6d1 -o sk=171af547930e3859396816c037928a03 -o logfile=/csi-demo-plugin/bos.log", v.Name, path)
+        return "bosfs", fmt.Sprintf("%s %s -o endpoint=http://bj.bcebos.com -o ak=xxx -o sk=xxx -o logfile=/csi-demo-plugin/bos.log", v.Name, path)
     } else {
         return "ossfs", fmt.Sprintf("%s %s -o passwd_file=/csi-demo-plugin/etc/passwd-ossfs -o nonempty -o url=oss-cn-chengdu.aliyuncs.com", v.Name, path)
     }
