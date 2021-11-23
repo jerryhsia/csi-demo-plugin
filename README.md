@@ -47,5 +47,3 @@ chmod 0600 etc/*
 ```bash
 deploy/deploy.sh
 ```
-
-# csi-demo-plugin
