@@ -2,7 +2,7 @@ kind: DaemonSet
 apiVersion: apps/v1
 metadata:
   name: csi-demo-driver
-  namespace: csi-dev
+  namespace: default
 spec:
   selector:
     matchLabels:
