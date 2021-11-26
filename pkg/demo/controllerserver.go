@@ -68,7 +68,7 @@ func (cs *ControllerServer) DeleteVolume(ctx context.Context, req *csi.DeleteVol
 // ControllerPublishVolume 附加
 func (cs *ControllerServer) ControllerPublishVolume(ctx context.Context, req *csi.ControllerPublishVolumeRequest) (*csi.ControllerPublishVolumeResponse, error) {
 	klog.Infof("ControllerPublishVolume: called with args %+v", *req)
-	pvInfo := map[string]string{DevicePathKey: "/dev/sdb"}
+	pvInfo := map[string]string{}
 	return &csi.ControllerPublishVolumeResponse{PublishContext: pvInfo}, nil
 }
 
