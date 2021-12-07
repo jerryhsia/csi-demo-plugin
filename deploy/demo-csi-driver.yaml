@@ -1,22 +1,22 @@
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:
-  name: csi-demo-driver
+  name: demo-csi-driver
   namespace: default
 spec:
   selector:
     matchLabels:
-      app: csi-demo-driver
+      app: demo-csi-driver
   template:
     metadata:
       labels:
-        app: csi-demo-driver
+        app: demo-csi-driver
     spec:
-      serviceAccount: csi-demo-driver
+      serviceAccount: demo-csi-driver
       containers:
         #plugin
-        - name: csi-demo-driver
-          image: jerry9916/csi-demo-driver:latest
+        - name: demo-csi-driver
+          image: jerry9916/demo-csi-driver:latest
           imagePullPolicy: IfNotPresent
           args:
             - --endpoint=$(CSI_ENDPOINT)
